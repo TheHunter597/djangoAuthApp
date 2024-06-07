@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "authentication/userCreatedEvent.json",
+  "title": "User Created Event",
+  "description": "Event that is published when a user is created",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The id of the user"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "The email of the user"
+    },
+    "first_name": {
+      "type": "string",
+      "description": "The first name of the user"
+    },
+    "last_name": {
+      "type": "string",
+      "description": "The last name of the user"
+    },
+    "avatar": {
+      "type": "string",
+      "description": "The date and time the user was created"
+    }
+  }
+}
