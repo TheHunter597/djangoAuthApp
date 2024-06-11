@@ -23,6 +23,9 @@ class CheckResetLinkConfirmed(views.APIView):
                 {"message": "Please check your email for the reset link"},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
+        import os
+
+        base_url = os.getenv("BASE_URL")
         return HttpResponseRedirect(
-            redirect_to=f"http://products.com/reset-password/{create_token(user)}/"
+            redirect_to=f"{base_url}/reset-password/{create_token(user)}/"
         )

@@ -14,7 +14,6 @@ from .views.others.renew_access_token import RenewAccessToken
 from .views.main.reset_password.reset_password import ResetUserPassword
 from .views.checkers.check_reset_link_confirmed import CheckResetLinkConfirmed
 from .views.others.change_user_password import ChangeUserPassword
-from rest_framework import routers
 
 urlpatterns = [
     path("create/", CreateUserView.as_view(), name="create_user"),

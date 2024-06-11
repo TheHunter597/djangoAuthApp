@@ -144,7 +144,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 ######
 
+
 AUTH_USER_MODEL = "authentication.UserModel"
+
+
 REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "authentication.exceptions.core_exception_handler.core_exception_handler",
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -153,7 +156,7 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_CLASSES": [
         "rest_framework.throttling.AnonRateThrottle",
     ],
-    "DEFAULT_THROTTLE_RATES": {"anon": "5/h"},
+    "DEFAULT_THROTTLE_RATES": {"anon": "20/h", "sustained": "1000/h"},
 }
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
