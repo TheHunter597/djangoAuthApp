@@ -156,7 +156,7 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_CLASSES": [
         "rest_framework.throttling.AnonRateThrottle",
     ],
-    "DEFAULT_THROTTLE_RATES": {"anon": "20/h", "sustained": "1000/h"},
+    "DEFAULT_THROTTLE_RATES": {"anon": "10/h", "sustained": "1000/h"},
 }
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
