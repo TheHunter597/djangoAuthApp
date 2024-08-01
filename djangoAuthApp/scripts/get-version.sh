@@ -33,17 +33,17 @@ if [[ "$PARAMETER" == *"major"* ]]; then
     NEW_VERSION=$(increment_major_version)
     # Update the version in the Python file
     sed -i "s/__version__ = \".*\"/__version__ = \"$NEW_VERSION\"/" $VERSION_FILE
-    echo "Version updated to: $NEW_VERSION"
+    echo "$NEW_VERSION"
 elif [[ "$PARAMETER" == *"minor"* ]]; then
     NEW_VERSION=$(increment_minor_version)
     # Update the version in the Python file
     sed -i "s/__version__ = \".*\"/__version__ = \"$NEW_VERSION\"/" $VERSION_FILE
-    echo "Version updated to: $NEW_VERSION"
+    echo "$NEW_VERSION"
 elif [[ "$PARAMETER" == *"patch"* ]]; then
     NEW_VERSION=$(increment_patch_version)
     # Update the version in the Python file
     sed -i "s/__version__ = \".*\"/__version__ = \"$NEW_VERSION\"/" $VERSION_FILE
-    echo "Version updated to: $NEW_VERSION"
+    echo "$NEW_VERSION"
 else
     echo "Invalid parameter. Use 'major', 'minor', or 'patch'."
 fi
