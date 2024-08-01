@@ -31,7 +31,7 @@ jobs:
           echo $GH_PAT
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-          git remote set-url origin https://TheHunter597:$GH_PAT@github.com/username/new-repo-url.git
+          git remote set-url origin https://TheHunter597:$GH_PAT@github.com/TheHunter597/djangoAuthApp/
           git add .
           git commit -m "Bump version to ${{ steps.get_required_version.outputs.version }} [skip ci] "
           git push --set-upstream origin ${{github.ref}}
