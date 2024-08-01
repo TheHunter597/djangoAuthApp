@@ -30,7 +30,8 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       - name: adding containers registry
         run: |
+          az login
           az acr login --name ecommercemainreg
       - name: push image to registry
         run: |
-          docker push ecommercemainreg.azurecr.io:${{ env.version }}
+          docker push ecommercemainreg.azurecr.io/auth:${{ env.version }}
