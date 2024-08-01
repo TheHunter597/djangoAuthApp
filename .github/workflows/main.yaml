@@ -23,12 +23,16 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "version=$version" >> "$GITHUB_ENV"
       - name: update git repo
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
+          git remote set-url origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}.git
+          git checkout ${{ github.ref }}
           git add .
           git commit -m "Bump version to ${{ steps.get_required_version.outputs.version }} [skip ci]"
-          git push --set-upstream origin ${{github.ref}}
+          git push origin ${{github.ref}}
       # - name: build docker image
       #   run: |
       #     docker build -t ecommercemainreg.azurecr.io/auth:${{ env.version }} -f Dockerfile .
