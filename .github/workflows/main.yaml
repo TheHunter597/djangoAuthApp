@@ -28,7 +28,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git add .
           git commit -m "Bump version to ${{ steps.get_required_version.outputs.version }} [skip ci]"
-          git git push --set-upstream origin ${{github.ref}}
+          git push --set-upstream origin ${{github.ref}}
       # - name: build docker image
       #   run: |
       #     docker build -t ecommercemainreg.azurecr.io/auth:${{ env.version }} -f Dockerfile .
