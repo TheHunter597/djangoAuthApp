@@ -1,0 +1,14 @@
+name: django-auth
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: test the application
+        run: |
+          docker build -t django-auth-test -f Dockerfile.test .
+          docker run django-auth-test

@@ -39,6 +39,7 @@ class CreateUserView(generics.CreateAPIView):
                     create_token(new_user, response)
                     return response
             except Exception as e:
+
                 raise exceptions.ValidationError(
                     {"message": "User creation error", "errors": e.detail}
                 )

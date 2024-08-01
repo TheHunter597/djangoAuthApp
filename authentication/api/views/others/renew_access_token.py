@@ -22,7 +22,6 @@ class RenewAccessToken(views.APIView):
             renewdResponse.set_cookie(key="access", value=access_token)
             return renewdResponse
         except Exception as e:
-            print(e)
             return response.Response(
                 {"message": "Invalid refresh token"}, status=status.HTTP_400_BAD_REQUEST
             )

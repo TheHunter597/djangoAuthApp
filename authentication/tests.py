@@ -153,6 +153,7 @@ class UserLoginTests(APITestCase):
         response = self.client.post(
             self.url, {"email": userData["email"], "password": "fgfgfgfg"}
         )
+
         self.assertEqual(response.data["message"], "User not found")
         self.assertEqual(
             response.data["errors"]["email"][0], "Email or password is wrong"
@@ -193,8 +194,7 @@ class TestUserUpdate(APITestCase):
     def test_update_user_without_being_authenticated(self):
         response = self.client.put(self.url, {})
         self.assertEqual(response.status_code, 401)
-        print({"lsjdfsdf": response.data})
-        self.assertEqual(response.data["detail"], "Please login to do this action.")
+        self.assertEqual(response.data["message"], "Please login to do this action.")
 
     def test_update_user_with_wrong_params(self):
         response = create_fake_user(self.client, True)["response"]
@@ -240,51 +240,22 @@ class ChangeUserPassword(APITestCase):
         client = client
         super().__init__(methodName)
 
-    def test_change_password_without_being_authenticated(self):
-        response = self.client.patch(self.url, {})
-        self.assertEqual(response.status_code, 401)
-        self.assertEqual(response.data["detail"], "Please login to do this action.")
-
-    def test_change_password_with_without_params(self):
+    def test_change_password_without_params(self):
         response = create_fake_user(self.client, True)["response"]
         self.client.credentials(
             HTTP_AUTHORIZATION="Bearer " + response.cookies.get("access").value
         )
-        result = self.client.patch(self.url, {})
+        result = self.client.put(self.url, {})
         self.assertEqual(result.status_code, 400)
         self.assertEqual(
             result.data["message"], "Error happened while changing password"
         )
         self.assertEqual(
-            result.data["errors"]["old_password"][0], "This field is required."
+            result.data["errors"]["new_password"][0], "This field may not be null."
         )
         self.assertEqual(
-            result.data["errors"]["new_password"][0], "This field is required."
-        )
-        self.assertEqual(
-            result.data["errors"]["confirm_new_password"][0], "This field is required."
-        )
-
-    def test_change_password_with_wrong_old_password(self):
-        data = create_fake_user(self.client, True)
-        response = data["response"]
-        self.client.credentials(
-            HTTP_AUTHORIZATION="Bearer " + response.cookies.get("access").value
-        )
-        result = self.client.patch(
-            self.url,
-            {
-                "old_password": "testdddd",
-                "new_password": "12345678",
-                "confirm_new_password": "12345678",
-            },
-        )
-        self.assertEqual(result.status_code, 400)
-        self.assertEqual(
-            result.data["message"], "Error happened while changing password"
-        )
-        self.assertEqual(
-            result.data["errors"]["old_password"][0], "Old password is wrong"
+            result.data["errors"]["confirm_new_password"][0],
+            "This field may not be null.",
         )
 
     def test_change_password_with_news_not_the_same(self):
@@ -294,12 +265,13 @@ class ChangeUserPassword(APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION="Bearer " + response.cookies.get("access").value
         )
-        result = self.client.patch(
+        result = self.client.put(
             self.url,
             {
-                "old_password": userData["password"],
                 "new_password": "12345678",
                 "confirm_new_password": "123456789",
+                "email": userData["email"],
+                "confirmation_token": "test",
             },
         )
         self.assertEqual(result.status_code, 400)
@@ -307,12 +279,12 @@ class ChangeUserPassword(APITestCase):
             result.data["message"], "Error happened while changing password"
         )
         self.assertEqual(
-            result.data["errors"]["new_password"][0],
-            "New password and confirm new password must match",
+            str(result.data["errors"]["new_password"][0]),
+            "New password and confirm new password do not match",
         )
         self.assertEqual(
-            result.data["errors"]["confirm_new_password"][0],
-            "New password and confirm new password must match",
+            str(result.data["errors"]["confirm_new_password"][0]),
+            "New password and confirm new password do not match",
         )
 
     def test_change_password_with_wrong_new_password_validation(self):
@@ -322,14 +294,19 @@ class ChangeUserPassword(APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION="Bearer " + response.cookies.get("access").value
         )
-        result = self.client.patch(
+        user = get_user_model().objects.filter(email=userData["email"]).first()
+        user.activation_token = "test"
+        user.save()
+        result = self.client.put(
             self.url,
             {
-                "old_password": userData["password"],
                 "new_password": "1234",
                 "confirm_new_password": "1234",
+                "confirmation_token": "test",
+                "email": userData["email"],
             },
         )
+
         self.assertEqual(result.status_code, 400)
         self.assertEqual(
             result.data["message"], "Error happened while changing password"
@@ -346,12 +323,16 @@ class ChangeUserPassword(APITestCase):
         self.client.credentials(
             HTTP_AUTHORIZATION="Bearer " + response.cookies.get("access").value
         )
-        result = self.client.patch(
+        user = get_user_model().objects.filter(email=userData["email"]).first()
+        user.activation_token = "test"
+        user.save()
+        result = self.client.put(
             self.url,
             {
-                "old_password": userData["password"],
-                "new_password": "12345678",
-                "confirm_new_password": "12345678",
+                "new_password": "1234testests",
+                "confirm_new_password": "1234testests",
+                "confirmation_token": "test",
+                "email": userData["email"],
             },
         )
         self.assertEqual(result.status_code, 200)
