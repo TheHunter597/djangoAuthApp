@@ -33,7 +33,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git remote set-url origin https://x-access-token:${GH_PAT}@github.com/${{ github.repository }}.git
           git add .
-          git commit -m "Bump version to ${{ steps.get_required_version.outputs.version }} [skip ci]"
+          git commit -m "Bump version to ${{ steps.get_required_version.outputs.version }} [skip ci] "
           git push --set-upstream origin ${{github.ref}}
       # - name: build docker image
       #   run: |
