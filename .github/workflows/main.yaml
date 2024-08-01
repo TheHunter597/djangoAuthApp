@@ -24,6 +24,5 @@ jobs:
       - name: get required version
         id: get_required_version
         run: |
-          ls
           echo "version=$(bash djangoAuthApp/scripts/get-version.sh $commit-message)" >> "$GITHUB_OUTPUT"
           echo $version
