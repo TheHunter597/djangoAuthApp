@@ -28,7 +28,7 @@ jobs:
         run: |
           git config --global user.email "thehunter597777@gmail.com"
           git config --global user.name "TheHunter597"
-          git remote set-url origin https://TheHunter597:$PASSWORD@github.com/TheHunter597/djangoAuthApp/
+          git remote set-url origin https://TheHunter597:$GH_PAT@github.com/TheHunter597/djangoAuthApp.git
           git add .
           git commit -m "Bump version to ${{ steps.get_required_version.outputs.version }} [skip ci] "
           git push
