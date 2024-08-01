@@ -20,6 +20,8 @@ jobs:
         id: get_required_version
         run: |
           version=$(bash djangoAuthApp/scripts/get-version.sh "${{ github.event.head_commit.message }}")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "version=$version" >> "$GITHUB_ENV"
-          echo $version
-          echo "I am here"
+      - name: build docker image
+        run: |
+          docker build -t mohamedAuth:${{  env.version }} -f Dockerfile .
