@@ -21,6 +21,5 @@ jobs:
         run: |
           version=$(bash djangoAuthApp/scripts/get-version.sh "${{ github.event.head_commit.message }}")
           echo "version=$version" >> "$GITHUB_ENV"
-          echo ${{ github.event.head_commit.message }}
-          echo $commit-message
+          echo $version
           echo "I am here"
