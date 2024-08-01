@@ -22,13 +22,20 @@ jobs:
           version=$(bash djangoAuthApp/scripts/get-version.sh "${{ github.event.head_commit.message }}")
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "version=$version" >> "$GITHUB_ENV"
-      - name: build docker image
+      - name: update git repo
         run: |
-          docker build -t ecommercemainreg.azurecr.io/auth:${{ env.version }} -f Dockerfile .
-      - uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-      - name: adding containers registry
-        run: |
-          az acr login --name ecommercemainreg
-          docker push ecommercemainreg.azurecr.io/auth:${{ env.version }}
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git add .
+          git commit -m "Bump version to ${{ steps.get_required_version.outputs.version }} [skip ci]"
+          git push
+      # - name: build docker image
+      #   run: |
+      #     docker build -t ecommercemainreg.azurecr.io/auth:${{ env.version }} -f Dockerfile .
+      # - uses: azure/login@v2
+      #   with:
+      #     creds: ${{ secrets.AZURE_CREDENTIALS }}
+      # - name: adding containers registry
+      #   run: |
+      #     az acr login --name ecommercemainreg
+      #     docker push ecommercemainreg.azurecr.io/auth:${{ env.version }}
