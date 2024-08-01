@@ -10,3 +10,19 @@ jobs:
         run: |
           docker build -t django-auth-test -f Dockerfile.test .
           docker run django-auth-test
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      commit-message: ${{ steps.get_commit_message.outputs.commit-message }}
+      version: ${{ steps.get_required_version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: get commit message
+        id: get_commit_message
+        run: |
+          echo "commit-message=${{ github.event.head_commit.message }}" >> "$GITHUB_OUTPUT"
+      - name: get required version
+        id: get_required_version
+        run: |
+          echo "version=$(bash scripts/get_version.sh)" >> "$GITHUB_OUTPUT"
+          echo $version
