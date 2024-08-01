@@ -24,7 +24,7 @@ jobs:
           echo "version=$version" >> "$GITHUB_ENV"
       - name: build docker image
         run: |
-          docker build -t ecommercemainreg.azurecr.io:${{ env.version }} -f Dockerfile .
+          docker build -t ecommercemainreg.azurecr.io/auth:${{ env.version }} -f Dockerfile .
       - uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
