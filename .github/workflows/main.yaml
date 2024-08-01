@@ -31,7 +31,7 @@ jobs:
           git remote set-url origin https://TheHunter597:$PASSWORD@github.com/TheHunter597/djangoAuthApp/
           git add .
           git commit -m "Bump version to ${{ steps.get_required_version.outputs.version }} [skip ci] "
-          git push --set-upstream origin ${{github.ref}}
+          git push
       # - name: build docker image
       #   run: |
       #     docker build -t ecommercemainreg.azurecr.io/auth:${{ env.version }} -f Dockerfile .
