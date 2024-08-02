@@ -72,7 +72,6 @@ jobs:
           git config --global user.email "thehunter597777@gmail.com"
           git config --global user.name "TheHunter597"
           git remote set-url origin https://TheHunter597:$GH_PAT@github.com/TheHunter597/djangoAuthApp.git
-
           git push
       - name: update git repo 6
         continue-on-error: true
@@ -82,6 +81,15 @@ jobs:
           git config --global user.email "thehunter597777@gmail.com"
           git config --global user.name "TheHunter597"
           git remote set-url origin https://TheHunter597:${{secrets.GH_PAT}}@github.com/TheHunter597/djangoAuthApp.git
+          git push
+      - name: update git repo 7
+        continue-on-error: true
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          git config --global user.email "thehunter597777@gmail.com"
+          git config --global user.name "TheHunter597"
+          git remote set-url origin https://TheHunter597:${{secrets.PASSWORD}}@github.com/TheHunter597/djangoAuthApp.git
           git push
       # - name: build docker image
       #   run: |
