@@ -33,6 +33,8 @@ jobs:
         run: |
           git add .
           git commit -m "version ${{ steps.get_required_version.outputs.version }}"
+          git remote set-url origin https://x-access-token:${GH_PAT}@github.com/TheHunter597/djangoAuthApp.git
+
           git push
       # - name: build docker image
       #   run: |
