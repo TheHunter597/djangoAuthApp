@@ -24,80 +24,13 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "version=$version" >> "$GITHUB_ENV"
 
-      - name: update git repo
-        continue-on-error: true
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
+      - uses: qoomon/actions--setup-git@v1
+        with:
+          user: ${{ github.actor }}
+      - name: update git
         run: |
-          git config --global user.email "thehunter597777@gmail.com"
-          git config --global user.name "TheHunter597"
-          git remote set-url origin https://x-access-token:${GH_PAT}@github.com/TheHunter597/djangoAuthApp.git
           git add .
-          git commit -m "Bump version to ${{ steps.get_required_version.outputs.version }} [skip ci]"
-          git push
-      - name: update git repo 2
-        continue-on-error: true
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-        run: |
-          git config --global user.email "thehunter597777@gmail.com"
-          git config --global user.name "TheHunter597"
-          git remote set-url origin https://TheHunter597:${GH_PAT}@github.com/TheHunter597/djangoAuthApp.git
-          git push
-      - name: update git repo 3
-        continue-on-error: true
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-        run: |
-          git config --global user.email "thehunter597777@gmail.com"
-          git config --global user.name "TheHunter597"
-          git remote set-url origin https://x-access-token:$GH_PAT@github.com/TheHunter597/djangoAuthApp.git
-
-          git push
-      - name: update git repo 4
-        continue-on-error: true
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-        run: |
-          git config --global user.email "thehunter597777@gmail.com"
-          git config --global user.name "TheHunter597"
-          git remote set-url origin https://x-access-token:${{secrets.GH_PAT}}@github.com/TheHunter597/djangoAuthApp.git
-
-          git push
-      - name: update git repo 5
-        continue-on-error: true
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-        run: |
-          git config --global user.email "thehunter597777@gmail.com"
-          git config --global user.name "TheHunter597"
-          git remote set-url origin https://TheHunter597:$GH_PAT@github.com/TheHunter597/djangoAuthApp.git
-          git push
-      - name: update git repo 6
-        continue-on-error: true
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-        run: |
-          git config --global user.email "thehunter597777@gmail.com"
-          git config --global user.name "TheHunter597"
-          git remote set-url origin https://TheHunter597:${{secrets.GH_PAT}}@github.com/TheHunter597/djangoAuthApp.git
-          git push
-      - name: update git repo 7
-        continue-on-error: true
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-        run: |
-          git config --global user.email "thehunter597777@gmail.com"
-          git config --global user.name "TheHunter597"
-          git remote set-url origin https://TheHunter597:${{secrets.PASSWORD}}@github.com/TheHunter597/djangoAuthApp.git
-          git push
-      - name: update git repo 8
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-        run: |
-          git config --global user.email "thehunter597777@gmail.com"
-          git config --global user.name "TheHunter597"
-          echo ${{ secrets.GITHUB_TOKEN }} | gh auth login --with-token
+          git commit -m "version ${{ steps.get_required_version.outputs.version }}"
           git push
       # - name: build docker image
       #   run: |
