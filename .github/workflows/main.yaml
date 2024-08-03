@@ -30,6 +30,8 @@ jobs:
         with:
           user: actor
       - name: update git
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git add .
           git commit -m "version ${{ steps.get_required_version.outputs.version }}"
