@@ -26,7 +26,7 @@ jobs:
 
       - uses: qoomon/actions--setup-git@v1
         with:
-          user: ${{ github.actor }}
+          user: actor
       - name: update git
         run: |
           git add .
