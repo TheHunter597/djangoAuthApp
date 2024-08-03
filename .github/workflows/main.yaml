@@ -17,6 +17,8 @@ jobs:
       version: ${{ steps.get_required_version.outputs.version }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: "false"
       - name: get required version
         id: get_required_version
         run: |
@@ -26,7 +28,7 @@ jobs:
 
       - uses: qoomon/actions--setup-git@v1
         with:
-          user: gTheHunter597 <thehunter597777@gmail.com>
+          user: actor
       - name: update git
         run: |
           git add .
