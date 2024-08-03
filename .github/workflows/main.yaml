@@ -26,7 +26,7 @@ jobs:
 
       - uses: qoomon/actions--setup-git@v1
         with:
-          user: actor
+          user: gTheHunter597 <thehunter597777@gmail.com>
       - name: update git
         run: |
           git add .
